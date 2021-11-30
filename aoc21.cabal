@@ -37,7 +37,9 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , extra
     , text
+    , time
   default-language: Haskell2010
 
 executable aoc21-exe
@@ -56,7 +58,9 @@ executable aoc21-exe
       aoc21
     , base >=4.7 && <5
     , containers
+    , extra
     , text
+    , time
   default-language: Haskell2010
 
 test-suite aoc21-test
@@ -76,5 +80,7 @@ test-suite aoc21-test
       aoc21
     , base >=4.7 && <5
     , containers
+    , extra
     , text
+    , time
   default-language: Haskell2010
