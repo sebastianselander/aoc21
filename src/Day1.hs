@@ -3,8 +3,7 @@ module Day1
     , solve2
     ) where
 
-import Relude
-
+import Data.Text
 
 solve1 :: Text -> Text
 solve1 _ = "Unsolved"

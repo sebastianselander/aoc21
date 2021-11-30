@@ -21,7 +21,6 @@ description: The premier haskell solutions for advent of code 2021
 dependencies:
 - base >= 4.7 && < 5
 - containers
-- relude
 - text
 
 library:
@@ -52,7 +51,6 @@ tests:
     - aoc21
 
 default-extensions:
-  - NoImplicitPrelude
   - ImportQualifiedPost
   - LambdaCase
   - OverloadedLists
