@@ -1,0 +1,86 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           aoc21
+version:        0.1.0.0
+description:    The premier haskell solutions for advent of code 2021
+homepage:       https://github.com/sebastianselander/aoc21#readme
+bug-reports:    https://github.com/sebastianselander/aoc21/issues
+author:         Sebastian Selander
+maintainer:     sebastian.selander@gmail.com
+copyright:      2021 Sebastian Selander
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/sebastianselander/aoc21
+
+library
+  exposed-modules:
+      Day1
+  other-modules:
+      Paths_aoc21
+  hs-source-dirs:
+      src
+  default-extensions:
+      NoImplicitPrelude
+      ImportQualifiedPost
+      LambdaCase
+      OverloadedLists
+      OverloadedStrings
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , relude
+    , text
+  default-language: Haskell2010
+
+executable aoc21-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_aoc21
+  hs-source-dirs:
+      app
+  default-extensions:
+      NoImplicitPrelude
+      ImportQualifiedPost
+      LambdaCase
+      OverloadedLists
+      OverloadedStrings
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aoc21
+    , base >=4.7 && <5
+    , containers
+    , relude
+    , text
+  default-language: Haskell2010
+
+test-suite aoc21-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_aoc21
+  hs-source-dirs:
+      test
+  default-extensions:
+      NoImplicitPrelude
+      ImportQualifiedPost
+      LambdaCase
+      OverloadedLists
+      OverloadedStrings
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aoc21
+    , base >=4.7 && <5
+    , containers
+    , relude
+    , text
+  default-language: Haskell2010
