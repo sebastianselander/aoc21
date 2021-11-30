@@ -9,8 +9,8 @@ import Day1 qualified as D1
 
 main :: IO ()
 main = do
-    preTime <- getCPUTime
     putStrLn "\nStarting..."
+    preTime <- getCPUTime
     [d,p] <- getArgs
     input <- readFile $ "input/Day" <> d
     let day = read d :: Int
