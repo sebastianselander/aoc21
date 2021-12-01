@@ -8,6 +8,9 @@ import Day1 qualified as D1
 completedDays :: Int
 completedDays = 1
 
+type Day = String
+type Part = String
+
 main :: IO ()
 main = do
     args <- getArgs
@@ -16,20 +19,19 @@ main = do
       ["all"] -> printAllSolutions 1
       [day,part] -> printSolution day part
 
-
-pickSolver :: (String -> String) -> (String -> String) -> String -> (String -> String)
+pickSolver :: (String -> String) -> (String -> String) -> Part -> (String -> String)
 pickSolver p1 p2 "1" = p1
 pickSolver p1 p2 "2" = p2
 pickSolver _ _ _   = error "no such part"
 
 
-printSolution :: String -> String -> IO ()
+printSolution :: Day -> Part -> IO ()
 printSolution day part = do
    input <- readFile $ "input/Day" <> day
    case day of
      "1" -> evalNTime day part (pickSolver D1.solve1 D1.solve2 part) input
 
-evalNTime :: String -> String -> (String -> String) -> String -> IO ()
+evalNTime :: Day -> Part -> (String -> String) -> String -> IO ()
 evalNTime day part f inp = do
     preTime <- getCPUTime
     putStrLn $ "Day " <> day <> ", part " <> part
@@ -47,5 +49,3 @@ printAllSolutions n
       printSolution (show n) "2"
       putStrLn "-------------------"
       printAllSolutions (n+1)
-
-
