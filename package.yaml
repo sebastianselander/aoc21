@@ -27,8 +27,8 @@ dependencies:
 
 library:
   source-dirs: src
-  exposed-dirs:
-    -  Day1
+    #  exposed-dirs:
+    #- Day1
 
 executables:
   aoc21-exe:
