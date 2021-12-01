@@ -32,6 +32,7 @@ library
       src
   default-extensions:
       ImportQualifiedPost
+      TupleSections
       LambdaCase
       OverloadedLists
       OverloadedStrings
@@ -52,6 +53,7 @@ executable aoc21-exe
       app
   default-extensions:
       ImportQualifiedPost
+      TupleSections
       LambdaCase
       OverloadedLists
       OverloadedStrings
@@ -75,6 +77,7 @@ test-suite aoc21-test
       test
   default-extensions:
       ImportQualifiedPost
+      TupleSections
       LambdaCase
       OverloadedLists
       OverloadedStrings
