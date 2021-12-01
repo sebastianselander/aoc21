@@ -25,6 +25,7 @@ source-repository head
 library
   exposed-modules:
       Day1
+      Day2
   other-modules:
       Paths_aoc21
   hs-source-dirs:
@@ -37,6 +38,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , directory
     , extra
     , text
     , time
@@ -58,6 +60,7 @@ executable aoc21-exe
       aoc21
     , base >=4.7 && <5
     , containers
+    , directory
     , extra
     , text
     , time
@@ -80,6 +83,7 @@ test-suite aoc21-test
       aoc21
     , base >=4.7 && <5
     , containers
+    , directory
     , extra
     , text
     , time
