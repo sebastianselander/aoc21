@@ -1,4 +1,4 @@
-module Day1
+module Days.Day1
     ( solve1
     , solve2
     ) where
@@ -8,11 +8,11 @@ import Data.List (foldl')
 parseInput :: String -> [Int]
 parseInput = (map read) . words
 
-solve1 :: String -> String
-solve1 = show . depth1 . parseInput
+solve1 :: String -> Int
+solve1 = depth1 . parseInput
 
-solve2 :: String -> String
-solve2 = show . depth2 . parseInput
+solve2 :: String -> Int
+solve2 = depth2 . parseInput
 
 --
 -- Funner :)
