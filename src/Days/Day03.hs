@@ -55,13 +55,7 @@ frequentChar :: String -> Char
 frequentChar = head . maximumBy (comparing length) . group . sort
 
 filterIndex :: Int -> Char -> Matrix -> Matrix
-filterIndex index char = filterMatrix ((==char) . get index)
-
-filterMatrix :: (String -> Bool) -> Matrix -> Matrix
-filterMatrix _ [] = []
-filterMatrix f (x:xs)
-  | f x       = x : filterMatrix f xs
-  | otherwise = filterMatrix f xs
+filterIndex index char = filter((== char) . get index)
 
 get :: Int -> [a] -> a
 get = flip (!!)
