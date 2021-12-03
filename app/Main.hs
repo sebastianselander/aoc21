@@ -1,11 +1,13 @@
 module Main where
 
 import Text.Printf
-import System.Time.Extra (sleep)
-import System.Environment (getArgs)
-import System.Directory (listDirectory)
-import System.CPUTime (getCPUTime)
-import Control.Monad (replicateM_)
+import System.Time.Extra            (sleep)
+import System.Environment           (getArgs)
+import System.Directory             (listDirectory)
+import System.CPUTime               (getCPUTime)
+import Control.Monad                (replicateM_)
+
+
 import Days.Day1  qualified as D1
 import Days.Day2  qualified as D2
 import Days.Day3  qualified as D3
@@ -34,8 +36,10 @@ import Days.Day25 qualified as D25
 
 type Day = String
 type Part = String
+type DPST = ((Day, Part), String, Double)
+
 completedDays :: Int
-completedDays = 2
+completedDays = 3
 
 main :: IO ()
 main = do
@@ -82,45 +86,44 @@ pickSolver p1 p2 "1" = p1
 pickSolver p1 p2 "2" = p2
 pickSolver _ _ _   = error "no such part"
 
-evalSolution :: (Day,Part) -> IO (String, Double)
-evalSolution dp = do
+evalSolution :: (Day,Part) -> IO DPST
+evalSolution (d,p) = do
     preTime <- getCPUTime
-    x <- show <$> match dp
+    x <- show <$> match (d,p)
     putStr $ (\a -> if length a > 0 then "" else a) x -- fuck laziness :)
     postTime <- getCPUTime
     let diff = (fromIntegral (postTime - preTime)) / (10^12)
-    return (x,diff)
+    return ((d, p), x, diff)
 
-evalAll :: IO [(String,Double)]
+evalAll :: IO [DPST]
 evalAll = do
     sequenceA $ reverse $ go completedDays
     where
-        go :: Int -> [IO (String,Double)]
+        go :: Int -> [IO DPST]
         go 0 = []
         go c = evalSolution (show c,"2") : evalSolution (show c,"1") :  go (c-1)
 
 
-ppH :: Int -> Int -> Int -> [(String,Double)] -> IO ()
+ppH :: Int -> Int -> Int -> [DPST] -> IO ()
 ppH _   _    size [] = putStrLn $ "+" <> replicate size  '-' <> "+" <> replicate (size - 1) '-' <> "+"
-  where
-    ws = replicate 25 ' '
-ppH day part size ((sol,time):xs) = do
+ppH day part size (((d, p), sol, time):xs) = do
       putStrLn $ "+" <> replicate size '-' <> "+" <> replicate (size - 1) '-' <> "+"
-      putStrLn $ "| Day " <> (show day) <> " - Part " <> (show part) <> (replicate (size - (dayd day)) ' ') <> " | Time:" <> replicate (size - 7) ' ' <> "|"
+      putStrLn $ "| Day " <> d <> " - Part " <> p <> (replicate (size - (dayd day)) ' ') <> " | Time:" <> replicate (size - 7) ' ' <> "|"
       putStr $ "| " <> sol <> (replicate (size - (length sol) - 2) ' ') <> " | "
-      putStr $ show time
-      -- printf "%0.3f s" (time :: Double)
+      putStr $ timeF
       putStr $ replicate (size - timeL - 2) ' ' <> "|\n"
       ppH (day+(part-1)) ((part `mod` 2) + 1) size xs
   where
-    timeL = length . show $ time
-    ws = replicate 25 ' '
+    timeF = printf "%0.3f s" time :: String
+    timeL = length timeF
     dayd d | d >= 10   = 17
            | otherwise = 16
 
-pp :: IO [(String,Double)] -> IO ()
+pp :: IO [DPST] -> IO ()
 pp x = do
     b <- x
-    let sols = map fst b
+    let sols = map mid b
     let actualSize = max (maximum $ map length sols) 18
     ppH 1 1 actualSize b
+  where
+    mid (x,y,z) = y

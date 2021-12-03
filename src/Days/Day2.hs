@@ -3,22 +3,13 @@ module Days.Day2
     , solve2
     ) where
 
---"forward 5\nup 5"
-test :: FilePath -> IO [(String,Int)]
-test xs = parseInput <$> readFile xs
-
-parseInput :: String -> [(String,Int)]
-parseInput = (map (\(x,y) -> (x,read y))) . (map toTuple) . (map words) . lines
-  where
-    toTuple :: [String] -> (String,String)
-    toTuple (x:y:[]) = (x,y)
-    toTuple _        = error "sadge"
+import Misc (parseAsStringGenList)
 
 solve1 :: String -> Int
-solve1 = path (0,0) . parseInput
+solve1 = path (0,0) . parseAsStringGenList
 
 solve2 :: String -> Int
-solve2 = path2 0 (0,0) . parseInput
+solve2 = path2 0 (0,0) . parseAsStringGenList
 
 path :: (Int,Int) -> [(String,Int)] -> Int
 path (x,y) []         = x*y
