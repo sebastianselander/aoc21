@@ -1,4 +1,4 @@
-module Days.Day9
+module Days.Day06
     ( solve1
     , solve2
     ) where

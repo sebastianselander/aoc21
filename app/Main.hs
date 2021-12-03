@@ -8,15 +8,15 @@ import System.CPUTime               (getCPUTime)
 import Control.Monad                (replicateM_)
 
 
-import Days.Day1  qualified as D1
-import Days.Day2  qualified as D2
-import Days.Day3  qualified as D3
-import Days.Day4  qualified as D4
-import Days.Day5  qualified as D5
-import Days.Day6  qualified as D6
-import Days.Day7  qualified as D7
-import Days.Day8  qualified as D8
-import Days.Day9  qualified as D9
+import Days.Day01 qualified as D1
+import Days.Day02 qualified as D2
+import Days.Day03 qualified as D3
+import Days.Day04 qualified as D4
+import Days.Day05 qualified as D5
+import Days.Day06 qualified as D6
+import Days.Day07 qualified as D7
+import Days.Day08 qualified as D8
+import Days.Day09 qualified as D9
 import Days.Day10 qualified as D10
 import Days.Day11 qualified as D11
 import Days.Day12 qualified as D12

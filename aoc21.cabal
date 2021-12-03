@@ -24,7 +24,15 @@ source-repository head
 
 library
   exposed-modules:
-      Days.Day1
+      Days.Day01
+      Days.Day02
+      Days.Day03
+      Days.Day04
+      Days.Day05
+      Days.Day06
+      Days.Day07
+      Days.Day08
+      Days.Day09
       Days.Day10
       Days.Day11
       Days.Day12
@@ -35,20 +43,12 @@ library
       Days.Day17
       Days.Day18
       Days.Day19
-      Days.Day2
       Days.Day20
       Days.Day21
       Days.Day22
       Days.Day23
       Days.Day24
       Days.Day25
-      Days.Day3
-      Days.Day4
-      Days.Day5
-      Days.Day6
-      Days.Day7
-      Days.Day8
-      Days.Day9
       Misc
   other-modules:
       Paths_aoc21
