@@ -8,7 +8,8 @@ module Misc (
               parseAsGenStringList,
               parseAsGenList, 
               parseAsMatrix,
-              linesSeq
+              linesSeq,
+              splitOn
 
             )
 
@@ -44,6 +45,10 @@ parseAsGenList = map read . words
 parseAsMatrix :: String -> [String]
 parseAsMatrix = lines
 
+splitOn :: Char -> String -> [String]
+splitOn c str = case break (==c) str of
+                (a, c:b) -> a : splitOn c b 
+                (a, "")    -> [a]
 
 linesSeq :: R.Text -> R.Seq R.Text
 linesSeq ps
