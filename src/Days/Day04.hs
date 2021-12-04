@@ -47,9 +47,6 @@ mark :: Int -> Slot Int -> Slot Int
 mark y (Left x) | x == y = Right x
 mark _ e                 = e
 
-mapB :: (Slot a -> Slot a) -> Board a -> Board a
-mapB f board = map (map f) board
-
 fromEither :: Slot a -> a
 fromEither (Left x) = x
 fromEither (Right x) = x
@@ -58,26 +55,26 @@ complete :: Board a -> Bool
 complete b = row b || col b
   where
     row = or . map (and . (map isRight))
-    col = or . map (and . (map isRight)) . transpose
+    col = row . transpose
 
 applyAll :: (Slot a -> Slot a) -> [Board a] -> [Board a]
 applyAll _ []     = []
-applyAll f (x:xs) = mapB f x : applyAll f xs
+applyAll f (x:xs) = map (map f) x : applyAll f xs
 
 applyMark :: Int -> [Board Int] -> [Board Int]
-applyMark n = applyAll (mark n)
+applyMark = applyAll . mark
 
 sumBoard :: (Int, Board Int) -> Int
 sumBoard (instr, board) = (*) instr . sum . lefts . concat $ board
 
 -- Part 1 & 2, only difference is `head` for part 1 and `last` for part 2
 
-oneStep :: Int -> [Board Int] -> [Board Int]
-oneStep instr board = filter complete (applyMark instr board)
+step :: Int -> [Board Int] -> [Board Int]
+step instr board = filter complete (applyMark instr board)
 
 go :: [(Int,Board Int)] -> [Int] -> [Board Int] -> [(Int,Board Int)]
 go buffer []           board = reverse buffer
-go buffer (first:rest) board = case (oneStep first board) of
+go buffer (first:rest) board = case (step first board) of
     [] -> go buffer rest (applyMark first board)
     xs -> go (putIn xs first buffer) rest (applyMark first board)
 
