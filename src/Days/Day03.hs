@@ -3,21 +3,19 @@ module Days.Day03
     , solve2
     ) where
 
-import Misc
-import Data.Char (digitToInt)
-import Data.Ord (comparing)
-import Data.List (transpose, foldl', group, sort, maximumBy, group)
+import           Misc
+import Data.Sequence qualified as Seq
 
-type Matrix = [String]
+type Matrix = [[Char]]
 
 parseInput :: String -> Matrix
 parseInput = parseAsMatrix -- just the lines function lol
 
 solve1 :: String -> Int
 solve1 str = gamma * epsilon
-    where
-        gamma = toDec $ map (mostCommon (>)) $ transpose $ parseInput str
-        epsilon = toDec $ map (invert . mostCommon (>)) $ transpose $ parseInput str
+  where
+    gamma = toDec . map (mostCommon (>)) . transpose . parseInput $ str
+    epsilon = toDec . map (invert . mostCommon (>)) . transpose . parseInput $ str
 
 solve2 :: String -> Int
 solve2 str = co2 str * oxy str
@@ -55,7 +53,7 @@ frequentChar :: String -> Char
 frequentChar = head . maximumBy (comparing length) . group . sort
 
 filterIndex :: Int -> Char -> Matrix -> Matrix
-filterIndex index char = filter((== char) . get index)
+filterIndex index char = filter  ( (== char) . get index )
 
 get :: Int -> [a] -> a
 get = flip (!!)

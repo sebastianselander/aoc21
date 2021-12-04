@@ -2,8 +2,8 @@ module Days.Day01
     ( solve1
     , solve2
     ) where
-import Misc (parseAsGenList)
-import Data.List (foldl')
+import           Data.List (foldl')
+import           Misc      (parseAsGenList)
 
 
 solve1 :: String -> Int

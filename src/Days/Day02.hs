@@ -3,7 +3,7 @@ module Days.Day02
     , solve2
     ) where
 
-import Misc (parseAsStringGenList)
+import           Misc (parseAsStringGenList)
 
 solve1 :: String -> Int
 solve1 = path (0,0) . parseAsStringGenList
