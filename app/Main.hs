@@ -39,7 +39,7 @@ type Part = String
 type DPST = ((Day, Part), String, Double)
 
 completedDays :: Int
-completedDays = 5
+completedDays = 6
 
 main :: IO ()
 main = do
@@ -55,31 +55,31 @@ match :: (Day,Part) -> IO Int
 match (day,part) = do
     input <- readFile $ "input/Day" <> day <> ".txt"
     case day of
-      "1" ->  pure $ (pickSolver D1.solve1 D1.solve2 part)   input
-      "2" ->  pure $ (pickSolver D2.solve1 D2.solve2 part)   input
-      "3" ->  pure $ (pickSolver D3.solve1 D3.solve2 part)   input
-      "4" ->  pure $ (pickSolver D4.solve1 D4.solve2 part)   input
-      "5" ->  pure $ (pickSolver D5.solve1 D5.solve2 part)   input
-      "6" ->  pure $ (pickSolver D6.solve1 D6.solve2 part)   input
-      "7" ->  pure $ (pickSolver D7.solve1 D7.solve2 part)   input
-      "8" ->  pure $ (pickSolver D8.solve1 D8.solve2 part)   input
-      "9" ->  pure $ (pickSolver D9.solve1 D9.solve2 part)   input
-      "10" -> pure $ (pickSolver D10.solve1 D10.solve2 part) input
-      "11" -> pure $ (pickSolver D11.solve1 D11.solve2 part) input
-      "12" -> pure $ (pickSolver D12.solve1 D12.solve2 part) input
-      "13" -> pure $ (pickSolver D13.solve1 D13.solve2 part) input
-      "14" -> pure $ (pickSolver D14.solve1 D14.solve2 part) input
-      "15" -> pure $ (pickSolver D15.solve1 D15.solve2 part) input
-      "16" -> pure $ (pickSolver D16.solve1 D16.solve2 part) input
-      "17" -> pure $ (pickSolver D17.solve1 D17.solve2 part) input
-      "18" -> pure $ (pickSolver D18.solve1 D18.solve2 part) input
-      "19" -> pure $ (pickSolver D19.solve1 D19.solve2 part) input
-      "20" -> pure $ (pickSolver D20.solve1 D20.solve2 part) input
-      "21" -> pure $ (pickSolver D21.solve1 D21.solve2 part) input
-      "22" -> pure $ (pickSolver D22.solve1 D22.solve2 part) input
-      "23" -> pure $ (pickSolver D23.solve1 D23.solve2 part) input
-      "24" -> pure $ (pickSolver D24.solve1 D24.solve2 part) input
-      "25" -> pure $ (pickSolver D25.solve1 D25.solve2 part) input
+      "1" ->  pure $ pickSolver D1.solve1 D1.solve2 part   input
+      "2" ->  pure $ pickSolver D2.solve1 D2.solve2 part   input
+      "3" ->  pure $ pickSolver D3.solve1 D3.solve2 part   input
+      "4" ->  pure $ pickSolver D4.solve1 D4.solve2 part   input
+      "5" ->  pure $ pickSolver D5.solve1 D5.solve2 part   input
+      "6" ->  pure $ pickSolver D6.solve1 D6.solve2 part   input
+      "7" ->  pure $ pickSolver D7.solve1 D7.solve2 part   input
+      "8" ->  pure $ pickSolver D8.solve1 D8.solve2 part   input
+      "9" ->  pure $ pickSolver D9.solve1 D9.solve2 part   input
+      "10" -> pure $ pickSolver D10.solve1 D10.solve2 part input
+      "11" -> pure $ pickSolver D11.solve1 D11.solve2 part input
+      "12" -> pure $ pickSolver D12.solve1 D12.solve2 part input
+      "13" -> pure $ pickSolver D13.solve1 D13.solve2 part input
+      "14" -> pure $ pickSolver D14.solve1 D14.solve2 part input
+      "15" -> pure $ pickSolver D15.solve1 D15.solve2 part input
+      "16" -> pure $ pickSolver D16.solve1 D16.solve2 part input
+      "17" -> pure $ pickSolver D17.solve1 D17.solve2 part input
+      "18" -> pure $ pickSolver D18.solve1 D18.solve2 part input
+      "19" -> pure $ pickSolver D19.solve1 D19.solve2 part input
+      "20" -> pure $ pickSolver D20.solve1 D20.solve2 part input
+      "21" -> pure $ pickSolver D21.solve1 D21.solve2 part input
+      "22" -> pure $ pickSolver D22.solve1 D22.solve2 part input
+      "23" -> pure $ pickSolver D23.solve1 D23.solve2 part input
+      "24" -> pure $ pickSolver D24.solve1 D24.solve2 part input
+      "25" -> pure $ pickSolver D25.solve1 D25.solve2 part input
 
 pickSolver :: (String -> Int) -> (String -> Int) -> Part -> (String -> Int)
 pickSolver p1 p2 "1" = p1
@@ -90,9 +90,9 @@ evalSolution :: (Day,Part) -> IO DPST
 evalSolution (d,p) = do
     preTime <- getCPUTime
     x <- show <$> match (d,p)
-    putStr $ (\a -> if length a > 0 then "" else a) x -- fuck laziness :)
+    putStr $ (\a -> if not (null a) then "" else a) x -- fuck laziness :)
     postTime <- getCPUTime
-    let diff = (fromIntegral (postTime - preTime)) / (10^12)
+    let diff = fromIntegral (postTime - preTime) / (10^12)
     return ((d, p), x, diff)
 
 evalAll :: IO [DPST]
@@ -108,9 +108,9 @@ ppH :: Int -> Int -> Int -> [DPST] -> IO ()
 ppH _   _    size [] = putStrLn $ "+" <> replicate size  '-' <> "+" <> replicate (size - 1) '-' <> "+"
 ppH day part size (((d, p), sol, time):xs) = do
       putStrLn $ "+" <> replicate size '-' <> "+" <> replicate (size - 1) '-' <> "+"
-      putStrLn $ "| Day " <> d <> " - Part " <> p <> (replicate (size - (dayd day)) ' ') <> " | Time:" <> replicate (size - 7) ' ' <> "|"
-      putStr $ "| " <> sol <> (replicate (size - (length sol) - 2) ' ') <> " | "
-      putStr $ timeF
+      putStrLn $ "| Day " <> d <> " - Part " <> p <> replicate (size - dayd day) ' ' <> " | Time:" <> replicate (size - 7) ' ' <> "|"
+      putStr $ "| " <> sol <> replicate (size - length sol - 2) ' ' <> " | "
+      putStr timeF
       putStr $ replicate (size - timeL - 2) ' ' <> "|\n"
       ppH (day+(part-1)) ((part `mod` 2) + 1) size xs
   where
