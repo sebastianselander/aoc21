@@ -22,6 +22,7 @@ import           Data.Text.Internal.Private (span_)
 import           Data.Text.Unsafe (unsafeTail)
 import           Data.Sequence qualified as Seq
 import           Data.Text qualified as T
+import           Data.Map qualified as M
 import           Relude qualified as R
 
 
