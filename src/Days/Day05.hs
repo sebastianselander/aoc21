@@ -15,7 +15,7 @@ data Line a = Line (a, a) (a, a)
     deriving (Show, Eq)
 
 parseInput :: String -> [Line Int]
-parseInput = map (toLine . map ((map read) . splitOn ',') . words . splitString) . lines
+parseInput = map (toLine . map (map read . splitOn ',') . words . splitString) . lines
   where
     toLine :: [[a]] -> Line a
     toLine [[a,b],[c,d]] = Line (a,b) (c,d)
@@ -37,4 +37,4 @@ lineToPoints l@(Line (x1,y1) (x2,y2))
                             ys <- [min y1 y2 .. max y1 y2]]
 
 getOverlaps :: [Line Int] -> Int
-getOverlaps = length . filter ((>=2) . length) . group . sort . concat . map lineToPoints 
+getOverlaps = length . filter ((>=2) . length) . group . sort . concatMap lineToPoints 
