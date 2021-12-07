@@ -4,28 +4,22 @@ module Days.Day07
     ) where
 
 import Misc
+import Control.Arrow ((&&&))
 
 solve1 :: String -> Int
-solve1 str = minimum $ allFuel (fuel id) (interval p) p
-  where
-    p = parseInput str
+solve1 = ((sum .) =<< map . (abs .) . (-) . median) . parseInput
+
 
 solve2 :: String -> Int
-solve2 str = minimum $ allFuel (fuel num) (interval p) p
-  where
-    p = parseInput str
-
+solve2 = ((sum .) =<< map . ((num . abs) .) . (-) . average) . parseInput
 parseInput :: String -> [Int]
 parseInput = map read . splitOn ','
 
-interval :: [Int] -> [Int]
-interval xs = [minimum xs .. maximum xs]
+average :: [Int] -> Int
+average = uncurry div . (sum &&& length) 
 
-fuel :: (Int -> Int) -> Int -> [Int] -> Int
-fuel f n = sum . map (f . abs . (n -))
-
-allFuel :: (Int -> [Int] -> Int) -> [Int] -> [Int] -> [Int]
-allFuel f xs ys = map (`f` ys) xs
+median :: [Int] -> Int
+median xs = (sort xs) !! (length xs `div` 2)
 
 num :: Int -> Int
-num n = n*(n+1) `div` 2
+num n = n * (n + 1) `div` 2
