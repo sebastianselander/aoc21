@@ -22,7 +22,7 @@ interval :: [Int] -> [Int]
 interval xs = [minimum xs .. maximum xs]
 
 fuel :: (Int -> Int) -> Int -> [Int] -> Int
-fuel n = sum . map (f . abs . (n -))
+fuel f n = sum . map (f . abs . (n -))
 
 allFuel :: (Int -> [Int] -> Int) -> [Int] -> [Int] -> [Int]
 allFuel f xs ys = map (`f` ys) xs
