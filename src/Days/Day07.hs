@@ -22,4 +22,4 @@ median :: [Int] -> Int
 median = uncurry (!!) . (sort &&& (flip div 2 . length))
 
 num :: Int -> Int
-num n = n * (n + 1) `div` 2
+num = flip div 2 . uncurry (*) . (id &&& (+1))
