@@ -1,34 +1,23 @@
-{-# LANGUAGE TupleSections #-}
-
 module Days.Day08
     ( solve1
     , solve2
     ) where
 
 import Misc
-import System.IO.Unsafe
-import Data.Bifunctor
-import Control.Monad
-import Control.Arrow
 
 solve1 :: String -> Int
-solve1 = part1 . parseInput1
+solve1 = length . filter lengthOk . parseInput1
 
 solve2 :: String -> Int
 solve2 = sum . map intListtoInt . map getResult . parseFile
 
+-----------------------------------funcs---------------------------------------
+
 parseInput1 :: String -> [String]
 parseInput1 = concatMap words . map (drop 2 . dropWhile (/= '|')) . lines
 
-part1 :: [String] -> Int
-part1 = length . filter okLength
-  where
-    okLength x = length x == 2 
-              || length x == 3 
-              || length x == 4 
-              || length x == 7
-
---------------------------------- PART 2 --------------------------------------
+lengthOk :: [a] -> Bool
+lengthOk x = length x == 2 || length x == 3 || length x == 4 || length x == 7
 
 getSegment :: [String] -> String-> Int
 getSegment known str
@@ -54,11 +43,6 @@ getSegment known str
 
 getKnown :: [String] -> [String]
 getKnown = sortBy (comparing length) . filter lengthOk 
-  where
-    lengthOk x = length x == 2 
-              || length x == 3 
-              || length x == 4 
-              || length x == 7
 
 figureout :: [String] -> [(String, Int)]
 figureout str = zip str (map (getSegment (getKnown str)) str)
@@ -79,4 +63,6 @@ parseFile :: String -> [([String], [String])]
 parseFile = map parseRow . lines
   where
     parseRow :: String -> ([String], [String])
-    parseRow str = (map sort $ words $ takeWhile (/= '|') str, map sort $ words $ drop 1 $ dropWhile (/= '|') str)
+    parseRow str = (map sort $ words $ takeWhile (/= '|') str
+                   , map sort $ words $ drop 1 $ dropWhile (/= '|') str)
+                   --just use spliton if you're not an ape like :)
