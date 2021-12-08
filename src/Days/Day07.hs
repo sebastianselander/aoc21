@@ -11,3 +11,7 @@ solve1 = ((sum .) =<< map . (abs .) . (-) . uncurry (!!) . (sort &&& (flip div 2
 
 solve2 :: String -> Int
 solve2 = ((sum .) =<< map . ((flip div 2 . uncurry (*) . (id &&& (+1)) . abs) .) . (-) . uncurry div . (sum &&& length)) . map read . splitOn ','
+
+main :: IO ()
+main = readFile "/home/sebastian/Downloads/d7.txt" >>= putStrLn . show . solve2
+
