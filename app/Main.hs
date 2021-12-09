@@ -53,7 +53,8 @@ main = do
 
 match :: (Day,Part) -> IO Int
 match (day,part) = do
-    input <- readFile $ "input/Day" <> day <> ".txt"
+    let d = replicate (2 - length day) '0' ++ day
+    input <- readFile $ "input/Day" <> d <> ".txt"
     case day of
       "1" ->  pure $ pickSolver D1.solve1 D1.solve2 part   input
       "2" ->  pure $ pickSolver D2.solve1 D2.solve2 part   input
