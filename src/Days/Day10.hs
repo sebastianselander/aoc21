@@ -6,32 +6,24 @@ module Days.Day10
     ) where
 
 import Misc
+import Control.Arrow ((&&&))
 
 solve1 :: String -> Int
 solve1 = sum 
-       . map (toPoints P1) 
+       . map toPoints
        . filter (/= 'x') 
        . map (corrupted []) 
        . parseInput
 
 solve2 :: String -> Int
-solve2 xs = nums !! (length nums `div` 2)
-  where
-    nums = sort 
-         . map (score . (incomplete [])) 
-         . filter (not . isCorrupted) 
-         . parseInput $ xs
+solve2 = uncurry (!!) 
+       . (sort &&& (flip div 2 . length)) 
+       . map (score . (incomplete [])) 
+       . filter (not . isCorrupted) 
+       . parseInput
 
 parseInput :: String -> [String]
 parseInput = lines
-
-flipBracket :: Char -> Char
-flipBracket = \case
-    '(' -> ')'
-    '[' -> ']'
-    '{' -> '}'
-    '<' -> '>'
-    _   -> error "incorrect char"
 
 match :: Char -> Char -> Bool
 match '(' ')' = True
@@ -49,23 +41,14 @@ isLeft = \case
     _   -> False
 
 score :: String -> Int
-score = foldl' (\acc x -> (toPoints P2 x) + (acc * 5)) 0
+score = foldl' (\acc x -> (toPoints x) + (acc * 5)) 0
 
-data P = P1 | P2
-
-toPoints :: P -> Char -> Int
-toPoints p c = case p of 
-    P1 -> case c of
-            ')' -> 3
-            ']' -> 57
-            '}' -> 1197
-            '>' -> 25137
-            _   -> error "not a bracket"
-    P2 -> case c of
-            ')' -> 1
-            ']' -> 2
-            '}' -> 3
-            '>' -> 4
+toPoints :: Char -> Int
+toPoints c = case c of 
+            '(' -> 1; ')' -> 3
+            '[' -> 2; ']' -> 57
+            '{' -> 3; '}' -> 1197
+            '<' -> 4; '>' -> 25137
             _   -> error "not a bracket"
 
 corrupted :: [Char] -> [Char] -> Char
@@ -81,7 +64,7 @@ isCorrupted xs = case corrupted [] xs of
     _   -> True
 
 incomplete :: [Char] -> [Char] -> [Char]
-incomplete stack    []      = map flipBracket stack
+incomplete stack    []      = stack
 incomplete []       (l:ine) = incomplete [l] ine
 incomplete (s:tack) (l:ine) = case isLeft l of
     True -> incomplete (l:s:tack) ine
