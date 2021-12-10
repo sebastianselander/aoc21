@@ -44,12 +44,12 @@ score :: String -> Int
 score = foldl' (\acc x -> (toPoints x) + (acc * 5)) 0
 
 toPoints :: Char -> Int
-toPoints c = case c of 
-            '(' -> 1; ')' -> 3
-            '[' -> 2; ']' -> 57
-            '{' -> 3; '}' -> 1197
-            '<' -> 4; '>' -> 25137
-            _   -> error "not a bracket"
+toPoints = \case
+      '(' -> 1; ')' -> 3
+      '[' -> 2; ']' -> 57
+      '{' -> 3; '}' -> 1197
+      '<' -> 4; '>' -> 25137
+      _   -> error "not a bracket"
 
 corrupted :: [Char] -> [Char] -> Char
 corrupted _          []        = 'x'
