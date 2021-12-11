@@ -39,14 +39,13 @@ type Part = String
 type DPST = ((Day, Part), String, Double)
 
 completedDays :: Int
-completedDays = 10
+completedDays = 11
 
 main :: IO ()
 main = do
     args <- getArgs
     case args of
-      [] -> do
-          pp evalAll
+      [] -> do pp evalAll
       [day,part] -> pp $ sequenceA [evalSolution (day,part)]
   where
     newLines = flip replicateM_ (putStrLn "")

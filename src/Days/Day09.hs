@@ -19,7 +19,7 @@ solve1 = sum
 solve2 :: String -> Int
 solve2 = product 
        . take 3 
-       . sortBy (\x y -> if x > y then LT else GT) 
+       . sortBy (flip compare) 
        . map ((+1) . length) 
        . recursively 100 
        . parseInput

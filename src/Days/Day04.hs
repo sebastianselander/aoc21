@@ -30,13 +30,10 @@ rowsToBoards (a:b:c:d:e:rest) = [a,b,c,d,e] : rowsToBoards rest
 rowsToBoards _                = error "failed converting to boards"
 
 parseInput :: String -> ([Int], [Board Int])
-parseInput str = (map read 
-                 $ splitOn ',' 
-                 $ head x, rowsToBoards 
-                 $ toRows 
-                 $ concat xs)
+parseInput str = (map read . splitOn ',' . head $ x
+                 , rowsToBoards . toRows . concat $ xs)
   where
-    (x:xs) = filter (not . null) $ map words $ parseAsMatrix str
+    (x:xs) = filter (not . null) . map words . parseAsMatrix $ str
 
 -- Helpers
 
@@ -44,7 +41,7 @@ mark :: Int -> Slot Int -> Slot Int
 mark y (Left x) | x == y = Right x
 mark _ e                 = e
 
-fromEither :: Slot a -> a
+fromEither :: Either a a -> a
 fromEither (Left x)  = x
 fromEither (Right x) = x
 
@@ -73,9 +70,7 @@ go buffer []           board = reverse buffer
 go buffer (first:rest) board = case step first board of
     [] -> go buffer rest (applyMark first board)
     xs -> go (putIn xs first buffer) rest (applyMark first board)
-
      where
-
        putIn :: [Board Int] -> Int -> [(Int, Board Int)] -> [(Int, Board Int)]
        putIn []     n buffer = buffer
        putIn (x:xs) n buffer = 

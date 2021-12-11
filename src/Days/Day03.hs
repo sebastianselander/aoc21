@@ -4,7 +4,6 @@ module Days.Day03
     ) where
 
 import           Misc
-import Data.Sequence qualified as Seq
 
 type Matrix = [[Char]]
 
