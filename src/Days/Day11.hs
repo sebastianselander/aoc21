@@ -7,7 +7,6 @@ import Misc
 import System.IO.Unsafe (unsafePerformIO)
 import Data.Maybe (catMaybes)
 import Control.Arrow ((&&&))
-import Debug.Trace
 
 solve1 :: String -> Int
 solve1 = sumSteps . steps 100 . map toOctopus . parseInput
@@ -15,41 +14,22 @@ solve1 = sumSteps . steps 100 . map toOctopus . parseInput
 solve2 :: String -> Int
 solve2 str = steps2 0 (0, map toOctopus $ parseInput $ str)
 
-test :: [Octopus]
-test = map toOctopus $ parseInput  "1111119991191911999111111"
-
 data Octopus = O 
              { flashed :: Bool
              , value :: Int
              } deriving Eq
 
-toOctopus :: Int -> Octopus
-toOctopus n = O {flashed = False, value = n}
-
-add :: Int -> Octopus -> Octopus
-add n (O b v) = O b (v+n) 
-
-instance Show Octopus where
-  show (O True v) = "T " <> show v
-  show (O False v) = "F " <> show v
-
 size :: Int 
 size = 10
 
-file :: [Octopus]
-file = map toOctopus $ parseInput $ unsafePerformIO $ readFile "input/Day11.txt"
-
-pp :: [Octopus] -> IO ()
-pp []                      = return ()
-pp (x:xs) 
-  | length xs `mod` size == 0 = putStrLn ((show x) <> spaces x) >> pp xs
-  | otherwise                 = putStr  ((show x) <> spaces x) >> pp xs
-  where
-    spaces (O b n) | n < 10 = "  "
-                   | otherwise = " "
+toOctopus :: Int -> Octopus
+toOctopus n = O {flashed = False, value = n}
 
 parseInput :: String -> [Int]
 parseInput = concatMap (map (read . (:""))) . lines
+
+add :: Int -> Octopus -> Octopus
+add n (O b v) = O b (v+n) 
 
 safeIndex :: Int -> [a] -> Maybe a
 safeIndex i xs
@@ -108,7 +88,6 @@ sumSteps = sum . map fst
 
 allFlash :: [Octopus] -> Bool
 allFlash = uncurry (==) . (length &&& popped)
-
 
 steps2 :: Int -> (Int,[Octopus]) -> Int
 steps2 n (v,grid)
