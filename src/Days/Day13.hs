@@ -70,3 +70,6 @@ pp (x:xs) canvas = pp xs (change x canvas)
 
 blank :: [String]
 blank = replicate 6 (replicate 25 ' ')
+
+run :: String -> IO ()
+run str = pp (foldEmUp $ parseInput str) blank
