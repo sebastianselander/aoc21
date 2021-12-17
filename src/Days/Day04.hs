@@ -33,7 +33,7 @@ parseInput :: String -> ([Int], [Board Int])
 parseInput str = (map read . splitOn ',' . head $ x
                  , rowsToBoards . toRows . concat $ xs)
   where
-    (x:xs) = filter (not . null) . map words . parseAsMatrix $ str
+    (x:xs) = filter (not . null) . map words . lines $ str
 
 -- Helpers
 

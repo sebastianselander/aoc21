@@ -8,7 +8,7 @@ import           Misc
 type Matrix = [[Char]]
 
 parseInput :: String -> Matrix
-parseInput = parseAsMatrix -- just the lines function lol
+parseInput = lines
 
 solve1 :: String -> Int
 solve1 str = gamma * epsilon

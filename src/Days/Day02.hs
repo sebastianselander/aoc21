@@ -3,13 +3,19 @@ module Days.Day02
     , solve2
     ) where
 
-import           Misc (parseAsStringGenList)
+import           Misc
 
 solve1 :: String -> Int
-solve1 = path (0,0) . parseAsStringGenList
+solve1 = path (0,0) . parseInput
 
 solve2 :: String -> Int
-solve2 = path2 0 (0,0) . parseAsStringGenList
+solve2 = path2 0 (0,0) . parseInput
+
+parseInput :: Read a => String -> [(String,a)]
+parseInput = map (second read. toTuple . words) . lines
+  where
+    toTuple :: [String] -> (String,String)
+    toTuple [x,y] = (x,y)
 
 path :: (Int,Int) -> [(String,Int)] -> Int
 path (x,y) []         = x*y

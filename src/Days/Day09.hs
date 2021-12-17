@@ -11,8 +11,7 @@ solve1 :: String -> Int
 solve1 = sum 
        . map (+1) 
        . fromJust 
-       . sequenceA 
-       . map snd 
+       . traverse snd 
        . lows 100 0 
        . parseInput
 

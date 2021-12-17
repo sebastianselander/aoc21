@@ -2,15 +2,15 @@ module Days.Day01
     ( solve1
     , solve2
     ) where
-import           Data.List (foldl')
-import           Misc      (parseAsGenList)
+import           Data.List
+import           Misc
 
 
 solve1 :: String -> Int
-solve1 = depth1 . parseAsGenList
+solve1 = depth1 . map read . words
 
 solve2 :: String -> Int
-solve2 = depth2 . parseAsGenList
+solve2 = depth2 . map read . words
 
 --
 -- Funner :)
