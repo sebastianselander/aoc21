@@ -11,7 +11,7 @@ solve1 = length
        . sort 
        . nub 
        . foldEmUp 
-       . uncurry (I) 
+       . uncurry I 
        . (grid &&& (:[]) . head . folds) 
        . parseInput
 
@@ -27,10 +27,9 @@ data Instruction =
 parseInput :: String -> Instruction
 parseInput str = I { grid = first, folds = second}
   where
-    first = map ((\[a,b] -> (read a,read b)) . (splitOn ',')) 
+    first = map ((\[a,b] -> (read a,read b)) . splitOn ',') 
           $ takeWhile (not . null) (lines str)
-    second = map (\str -> (head str, read (drop 2 str))) 
-           $ map (drop 11) 
+    second = map ((\str -> (head str, read (drop 2 str))) . drop 11)
            $ tail 
            $ dropWhile (not . null) (lines str)
 

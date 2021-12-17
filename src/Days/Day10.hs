@@ -18,7 +18,7 @@ solve1 = sum
 solve2 :: String -> Int
 solve2 = uncurry (!!) 
        . (sort &&& (flip div 2 . length)) 
-       . map (score . (incomplete [])) 
+       . map (score . incomplete []) 
        . filter (not . isCorrupted) 
        . parseInput
 
@@ -41,7 +41,7 @@ isLeft = \case
     _   -> False
 
 score :: String -> Int
-score = foldl' (\acc x -> (toPoints x) + (acc * 5)) 0
+score = foldl' (\acc x -> toPoints x + (acc * 5)) 0
 
 toPoints :: Char -> Int
 toPoints = \case
@@ -54,9 +54,10 @@ toPoints = \case
 corrupted :: [Char] -> [Char] -> Char
 corrupted _          []        = 'x'
 corrupted []         (l:ine) = corrupted [l] ine
-corrupted (s:tack) (l:ine) = case isLeft l of
-    True -> corrupted (l:s:tack) ine
-    False -> if match s l then corrupted tack ine else l
+corrupted (s:tack) (l:ine)
+  | isLeft l = corrupted (l:s:tack) ine
+  | match s l = corrupted tack ine 
+  | otherwise = l
 
 isCorrupted :: String -> Bool
 isCorrupted xs = case corrupted [] xs of
@@ -66,8 +67,7 @@ isCorrupted xs = case corrupted [] xs of
 incomplete :: [Char] -> [Char] -> [Char]
 incomplete stack    []      = stack
 incomplete []       (l:ine) = incomplete [l] ine
-incomplete (s:tack) (l:ine) = case isLeft l of
-    True -> incomplete (l:s:tack) ine
-    False -> case match s l of
-        True -> incomplete tack ine
-        False -> error "lines should not be corruped"
+incomplete (s:tack) (l:ine)
+  | isLeft l = incomplete (l:s:tack) ine
+  | match s l = incomplete tack ine
+  | otherwise = error "lines should not be corruped"

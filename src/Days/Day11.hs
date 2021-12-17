@@ -5,7 +5,7 @@ module Days.Day11
 
 import Misc
 import System.IO.Unsafe (unsafePerformIO)
-import Data.Maybe (catMaybes)
+import Data.Maybe (mapMaybe)
 import Control.Arrow ((&&&))
 
 solve1 :: String -> Int
@@ -53,15 +53,15 @@ neighborIndexes sz n
 
 indexesToOctopi :: Int -> [Octopus] -> [Octopus]
 indexesToOctopi idx grid 
-    = catMaybes (map (flip safeIndex grid) (neighborIndexes (size grid) idx))
+    = mapMaybe (`safeIndex` grid) (neighborIndexes (size grid) idx)
 
 poppableOctopi :: Int -> [Octopus] -> Int
-poppableOctopi idx = length . filter (okOctopus) . (indexesToOctopi idx)
+poppableOctopi idx = length . filter okOctopus . indexesToOctopi idx
   where
     okOctopus (O b v) = not b && v > 9
 
 partialStep :: [Octopus] -> [Octopus]
-partialStep = uncurry (flip go 0) . (length &&& id)
+partialStep = uncurry (`go` 0) . (length &&& id)
   where
     go :: Int -> Int -> [Octopus] -> [Octopus]
     go cap idx xs | cap == idx = []

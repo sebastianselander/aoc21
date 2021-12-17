@@ -31,7 +31,7 @@ parseInput :: String -> Polymer
 parseInput str = P { template = temp, instructions = instr }
   where
     temp = head (lines str)
-    instr = map (\str -> (take 2 str, head $ drop 6 str)) $ drop 2 (lines str)
+    instr = map (\str -> (take 2 str, str !! 6)) $ drop 2 (lines str)
 
 parseP2 :: Polymer -> [(String, Int)]
 parseP2 p = combine (map (\x -> (head x, length x)) 
@@ -39,7 +39,7 @@ parseP2 p = combine (map (\x -> (head x, length x))
           $ sort 
           $ pairExists 
           $ template p) 
-          ++ (foldl' (\acc (str,c) -> (str,0) : acc) [] $ instructions p)
+          ++ foldl' (\acc (str,c) -> (str,0) : acc) [] (instructions p)
   where
     pairExists :: String -> [String]
     pairExists []         = []
@@ -54,8 +54,8 @@ findAndPair instr str = match $ head $ filter ((str==) . fst) instr
     match ([a,b],c) = ([a,c],[c,b])
 
 combine :: [(String, Int)] -> [(String, Int)]
-combine xs = uncurry (zip) 
-           $ (map (fst . head) &&& (map (sum . (map snd)))) 
+combine xs = uncurry zip 
+           $ (map (fst . head) &&& map (sum . map snd)) 
            $ groupBy (\(a,b) (c,d) -> a == c) 
            $ sort xs
 
@@ -79,7 +79,7 @@ convertPairs (([a,b],n):rest) = (a:"",n) : convertPairs rest
 
 addLast :: String -> [(String, Int)] -> [(String, Int)]
 addLast start []         = []
-addLast start ((a,b):xs) = if a == ((:[]) $ last start) then 
+addLast start ((a,b):xs) = if a == (:[]) (last start) then 
                              (a,b+1) : addLast start xs 
                            else 
                              (a,b) : addLast start xs

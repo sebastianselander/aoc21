@@ -11,16 +11,10 @@ import Debug.Trace (trace)
 import Data.Maybe (fromJust)
 
 solve1 :: String -> Int
-solve1 str = snd . fromJust $ p1 0 9999 $ edges 0 100 (parseInput 100 str) (vertices 100)
+solve1 str = snd . fromJust $ G.findPath 0 9999 $ edges 0 100 (parseInput 100 str) (vertices 100)
 
 solve2 :: String -> Int
-solve2 str = snd . fromJust $ p1 0 249999 $ edges 0 500 (parseInput2 500 str) (vertices 500)
-
-d15 :: String
-d15 = unsafePerformIO $ readFile "input/Day15.txt"
-
-t15 :: String
-t15 = unsafePerformIO $ readFile "input/Day15test.txt"
+solve2 str = snd . fromJust $ G.findPath 0 249999 $ edges 0 500 (parseInput2 500 str) (vertices 500)
 
 parseInput :: Int -> String -> M.IntMap Int
 parseInput width str = go width 0 (concatMap (map (read . (:""))) $ lines str) M.empty
@@ -55,6 +49,3 @@ edges n width xs g = edges (n + 1) width xs (subGraph g (neighbIdx width n))
   where
     subGraph gr []     = gr
     subGraph gr (a:as) = subGraph (G.addEdge n a (xs M.! a) gr) as
-
-p1 :: Int -> Int -> G.Graph Int Int -> Maybe ([Int], Int)
-p1 from to g = G.findPath from to g
