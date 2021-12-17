@@ -39,7 +39,7 @@ type Part = String
 type DPST = ((Day, Part), String, Double)
 
 completedDays :: Int
-completedDays = 14
+completedDays = 17
 
 main :: IO ()
 main = do
@@ -101,6 +101,7 @@ evalAll = do
     where
         go :: Int -> [IO DPST]
         go 0 = []
+        go 15 = go 14 --15 is so fucking slow
         go c = evalSolution (show c,"2") : evalSolution (show c,"1") :  go (c-1)
 
 
