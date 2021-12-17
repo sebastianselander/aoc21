@@ -9,7 +9,8 @@ module Misc (
               parseAsGenList, 
               parseAsMatrix,
               linesSeq,
-              splitOn
+              splitOn,
+              unsafePerformIO
 
             )
 
@@ -24,6 +25,7 @@ import           Data.Sequence qualified as Seq
 import           Data.Text qualified as T
 import           Data.Map qualified as M
 import           Relude qualified as R
+import           System.IO.Unsafe (unsafePerformIO)
 
 
 parseAsStringGenList :: Read a => String -> [(String,a)]

@@ -4,8 +4,6 @@ module Days.Day13
     ) where
 
 import Misc
-import System.IO.Unsafe (unsafePerformIO)
-import Debug.Trace (trace)
 import Control.Arrow ((&&&))
 
 solve1 :: String -> Int
@@ -26,18 +24,15 @@ data Instruction =
     , folds :: [(Char,Int)]
     } deriving Show
 
-d13 :: String
-d13 = unsafePerformIO $ readFile "input/Day13.txt"
-
--- parseInput :: String -> ([[Int]],[String])
+parseInput :: String -> Instruction
 parseInput str = I { grid = first, folds = second}
   where
-    first = map ((\[a,b] -> (read a,read b)) . (splitOn ',')) $ takeWhile (not . null) (lines str)
-    second :: [(Char, Int)]
-    second = map (\str -> (head str, read (drop 2 str))) $ map (drop 11) $ tail $ dropWhile (not . null) (lines str)
-
-t13 :: String
-t13 = unsafePerformIO $ readFile "input/Day13test.txt"
+    first = map ((\[a,b] -> (read a,read b)) . (splitOn ',')) 
+          $ takeWhile (not . null) (lines str)
+    second = map (\str -> (head str, read (drop 2 str))) 
+           $ map (drop 11) 
+           $ tail 
+           $ dropWhile (not . null) (lines str)
 
 horFold :: Int -> [(Int, Int)] -> [(Int, Int)]
 horFold instr = map folder

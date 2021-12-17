@@ -49,7 +49,9 @@ library
       Days.Day23
       Days.Day24
       Days.Day25
+      Graph
       Misc
+      SkewHeap
   other-modules:
       Paths_aoc21
   hs-source-dirs:
@@ -63,6 +65,7 @@ library
     , containers
     , directory
     , extra
+    , pqueue
     , relude
     , text
     , time
@@ -85,6 +88,7 @@ executable aoc21-exe
     , containers
     , directory
     , extra
+    , pqueue
     , relude
     , text
     , time
@@ -108,6 +112,7 @@ test-suite aoc21-test
     , containers
     , directory
     , extra
+    , pqueue
     , relude
     , text
     , time

@@ -26,6 +26,7 @@ dependencies:
 - time
 - extra
 - directory
+- pqueue
 
 library:
   source-dirs: src

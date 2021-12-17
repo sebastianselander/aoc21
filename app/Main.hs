@@ -39,7 +39,7 @@ type Part = String
 type DPST = ((Day, Part), String, Double)
 
 completedDays :: Int
-completedDays = 12
+completedDays = 14
 
 main :: IO ()
 main = do
