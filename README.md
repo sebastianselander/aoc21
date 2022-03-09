@@ -1,2 +1,2 @@
 # aoc21
-absolute shit tier solutions
+Haskell solutions for most days of advent of code 2021
