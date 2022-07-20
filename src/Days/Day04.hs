@@ -12,7 +12,6 @@ solve1 = score . head . uncurry (go []) . parseInput
 solve2 :: String -> Int
 solve2 = score . last . uncurry (go []) . parseInput
 
-
 type Slot a      = Either a a
 type Instruction = Int
 type Board a     = [[Slot a]]
@@ -83,4 +82,3 @@ go buffer (first:rest) board = case step first board of
        strippedBoard = map (map fromEither)
        strippedBuffer :: [(Int, Board Int )] -> [[[Int]]]
        strippedBuffer = map (map (map fromEither) . snd)
-
